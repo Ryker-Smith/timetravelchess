@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Time Travel Chess</title>
+<style>
+
+#ChessBoard{
+  width:420px;
+  height:420px;
+  border:1px solid black;
+}
+div{
+  width:52px;
+  height:52px;
+  float:left;
+  font-size:40px;
+  line-height:52px;
+  text-align:center;
+}
+
+</style>
+</head>
+<body>
+
+<div id="ChessBoard"></div>
+<script src="chess.js"></script>
+<script>
+//               W = 9812..9817;  B = 9818..9823       (- 9811 =)
+// (EMPTY = 0)   W = 1..6;        B = 7..12
+
+let board = document.getElementById("ChessBoard");
+demo();
+async function demo() {
+  let map = [
+    3, 5, 4, 2, 1, 4, 5, 3,
+    6, 6, 6, 6, 6, 6, 6, 6,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,   
+    12,12,12,12,12,12,12,12,
+    9,11,10, 8, 7,10,11, 9,
+  ];
+  mapchange('N','b8','c6');
+  drawboard(map);
+  await sleep(1500);
+//   map = [
+//     3, 0, 4, 2, 1, 4, 5, 3,
+//     6, 6, 6, 6, 6, 6, 6, 6,
+//     0, 0, 5, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0,
+//     0, 0, 0, 0, 0, 0, 0, 0,   
+//     12,12,12,12,12,12,12,12,
+//     9,11,10, 8, 7,10,11, 9,
+//   ];
+  drawboard(map);
+  await sleep(1500);
+  map = [
+    3, 0, 4, 2, 1, 4, 5, 3,
+    6, 6, 6, 6, 6, 6, 6, 6,
+    0, 0, 5, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 12, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,   
+    12,12,12,0,12,12,12,12,
+    9,11,10, 8, 7,10,11, 9,
+  ];
+  drawboard(map);
+  await sleep(1500);
+  map = [
+    3, 0, 4, 2, 1, 4, 5, 3,
+    6, 6, 6, 6, 6, 6, 6, 6,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 5, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,   
+    12,12,12,0,12,12,12,12,
+    9,11,10, 8, 7,10,11, 9,
+  ];
+  drawboard(map);
+}
+function drawboard(thisboard) {
+  board.innerHTML="";
+  for (let i=0; i< 64; i++){
+    let tile = document.createElement("div");
+    tile.style.backgroundColor = parseInt((i / 8) + i) % 2 == 0 ? 'white' : 'lightgray';
+    tile.innerHTML = !thisboard[i] ? "" : "&#"+ (9811+thisboard[i]) +";";
+    board.appendChild(tile);
+  }
+}
+function mapchange(piece, fromsquare,tosquare) {
+  console.log(piece + " " +fromsquare + ' --> ' + tosquare);
+}
+</script>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8" />
+  <title>Esprima: Syntax Validator</title>
+  <meta name="viewport" content="width=device-width" />
+  <link rel="stylesheet" href="built-editor.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="foundation.min.css">
+</head>
+
+<body>
+
+  <!-- Title and subtitle -->
+  <style> .row{ width: 100%;}</style>
+  <div class="row">
+    <div class="twelve columns">
+       <h5 class="subheader">You are using <strong>Esprima</strong> to check for syntax errors</h5><input type="text" id="fn"><input type="button" value="load" onclick="getnewfile()"></input>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="row">
+    <div class="twelve columns">
+
+    <pre id="editor" spellcheck="false" style="height: 600px; width=190px;" ></pre>
+
+    <div id="info" class="alert-box success">No result yet.</div>
+    </div>
+    <div class="twelve columns">
+      <div class="panel">
+        <p>This syntax validator does <strong>not</strong> care about coding styles and formatting.</p>
+        <p>If there is a syntax error, the sign <img src="data:image/gif;base64,R0lGODlhEAAQANUAAP7bc//egf/ij/7ijv/jl/7kl//mnv7lnv/uwf7CTP7DTf7DT/7IW//Na/7Na//NbP7QdP/dmbltAIJNAF03AMSAJMSCLKqASa2DS6uBSquCSrGHTq6ETbCHT7WKUrKIUcCVXL+UXMOYX8GWXsSZYMiib6+ETbOIUcOXX86uhd3Muf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAACsALAAAAAAQABAAAAZowJVwSCwaj0ihikRSJYcoBEL0XKlGkcjImQQhJBREKFnyICoThKeE/AAW6AXgdPyUAgrLJBEo0YsbAQyDhAEdRRwDDw8OaA4NDQImRBgFEJdglxAEGEQZKQcHBqOkKRpFF6mqq1WtrUEAOw=="> will be shown in the left-side gutter. Placing the mouse cursor over that sign will reveal the complete error description.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <div class="row copyright">
+    <div class="six columns">
+      <p>Esprima is created and maintained by <a href="http://ariya.ofilabs.com/about">Ariya Hidayat</a>.</p>
+    </div>
+    <div class="six columns">
+      <ul class="link-list right">
+        <li><a href="https://github.com/jquery/esprima">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+
+<script src="esprima.js"></script>
+<script src="built-editor.min.js"></script>
+<script src="customeditor.js"></script>
+<script src="validate.js"></script>
+<script>
+function includefile(f,w) {
+      let url=f;
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', url);
+      xhr.send();
+      xhr.onload = function() {
+        if (xhr.status != 200) { // OK?
+          console.log("Feck");
+        }
+        else { 
+          // display response in the editor
+          document.getElementById(w).innerHTML=xhr.response; 
+          // save the filename
+          document.getElementById('fn').value=f;
+          // now must re-init the editor
+          try {
+                require(['custom/editor'], function (editor) {
+                    window.editor = editor({ parent: 'editor', lang: 'js' });
+                    window.editor.getTextView().getModel().addEventListener("Changed", function () { validate(); });
+                });
+                validate();
+          } catch (e) {}
+        }
+      };
+      xhr.onerror = function() {
+        parentUpdate(myparent, "error");
+      };
+}
+
+function getnewfile() {
+  includefile(document.getElementById("fn").value,"editor");
+}
+
+includefile("../grassworld.js","editor");
+</script>
+</body>
+</html>

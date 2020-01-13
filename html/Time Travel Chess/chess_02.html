@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Time Travel Chess</title>
+<style>
+*{
+margin: auto;
+}
+h2 {
+text-align: center;
+}
+td {
+  width: 40px;
+  height: 40px;
+  padding: 0px;
+}
+.black{
+  background-color: black;
+}
+.white  {
+  background-color: white;
+}
+#board_area {
+  border: 1px solid black;
+  width: 320px;
+  margin: auto;
+}
+#board {
+}
+num-left {
+}
+h3 { 
+text-align: center;
+letter-spacing: 14px;
+}
+.dot {
+color: transparent;
+}
+</style>
+</head>
+<body>
+
+<h2>Time Travel Chess</h2>
+<input id="myInput" value="guity">
+<button id="myBtn" onclick=" (myInput)">Button</button>
+<div id="num_left"></div>
+<script>
+var num = ["8", "7", "6", "5", "4", "3", "2", "1"];
+var text = "";
+var i;
+for (i = 0; i < num.length; i++) {
+  text += num[i] + "<br>";
+}
+document.getElementById("num_left").innerHTML = text;
+</script>
+
+<div id="board_area"></div>
+<script>
+  var bw=-1;
+  var size=8;
+  var tb='<table id="board">';
+  for (var i=0; i<size; i++) {
+    tb += '<tr>';
+    for (var k=0; k<size; k++) {
+      var thisid=i+'::'+k;
+      tb += '<td id="'+ thisid +'" class="';
+      if (bw > 0) {
+        tb += 'black';
+      }
+      else {
+        tb += 'wh ite';
+      }
+      bw *= -1;
+      tb +='">';
+      // content of the cell goes here
+      tb += '</td>';
+    }
+    tb +='</tr>';
+    bw*=-1;
+  }
+  tb += '</table>';
+  document.getElementById('board_area').innerHTML=tb;
+</script>
+<script>
+var input = document.getElementById("myInput");
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("myInput").click();
+  }
+});
+</script>
+
+</body>
+  <h3></div>a b c d e f g  h </h3>
+<div id='cellprefix'>Its Whites Turn.</div>
+</body>
+</html>
